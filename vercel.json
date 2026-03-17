@@ -1,0 +1,11 @@
+{
+  "functions": {
+    "api/mac.js": {
+      "runtime": "nodejs@18.x"
+    }
+  },
+  "rewrites": [
+    { "source": "/api/mac", "destination": "/api/mac.js" }
+  ]
+}
+
