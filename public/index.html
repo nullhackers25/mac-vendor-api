@@ -18,13 +18,29 @@
     <script>
         async function consultar() {
             const mac = document.getElementById('mac').value;
-            const response = await fetch(`/api/mac?mac=${mac}`);
-            const data = await response.json();
-            
-            document.getElementById('result').innerHTML = `
-                <strong>MAC:</strong> ${data.mac}<br>
-                <strong>Fabricante:</strong> ${data.vendor}
-            `;
+
+            if (!mac) {
+                document.getElementById('result').innerText = 'Digite um MAC';
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/mac?mac=${mac}`);
+                const data = await response.json();
+
+                if (data.error) {
+                    document.getElementById('result').innerText = data.error;
+                    return;
+                }
+
+                document.getElementById('result').innerHTML = `
+                    <strong>MAC:</strong> ${data.mac}<br>
+                    <strong>Prefixo:</strong> ${data.prefix}<br>
+                    <strong>Fabricante:</strong> ${data.vendor}
+                `;
+            } catch (e) {
+                document.getElementById('result').innerText = 'Erro na consulta';
+            }
         }
     </script>
 </body>
