@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MAC Vendor Lookup</title>
+    <style>
+        body { background: #1a1a1a; color: #fff; font-family: Arial; padding: 20px; }
+        input { padding: 10px; width: 300px; background: #333; color: #fff; border: 1px solid #4FC3F7; }
+        button { padding: 10px 20px; background: #4FC3F7; color: #000; border: none; cursor: pointer; }
+        #result { margin-top: 20px; color: #4FC3F7; }
+    </style>
+</head>
+<body>
+    <h2>🔍 Consulta de Fabricante MAC Address</h2>
+    <input type="text" id="mac" placeholder="Ex: 00:17:88:12:34:56">
+    <button onclick="consultar()">Consultar</button>
+    <div id="result"></div>
+
+    <script>
+        async function consultar() {
+            const mac = document.getElementById('mac').value;
+            const response = await fetch(`/api/mac?mac=${mac}`);
+            const data = await response.json();
+            
+            document.getElementById('result').innerHTML = `
+                <strong>MAC:</strong> ${data.mac}<br>
+                <strong>Fabricante:</strong> ${data.vendor}
+            `;
+        }
+    </script>
+</body>
+</html>
